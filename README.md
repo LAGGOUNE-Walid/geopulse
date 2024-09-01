@@ -16,6 +16,12 @@ HTTP Location Updates (Slower)
 4.No Response Needed (Data Delivered Fast): No acknowledgment is required from the server.<br/>
     
 # Installation
+```
+docker pull laggounewalid/geopulse:1.0
+```
+```
+docker run -d -p 9505:9505/udp -v ./pulse-config:/var/www/html/config laggounewalid/geopulse:1.0
+```
 ## Requirements
 - Queue server supported by illuminate/queue
 - Database supported by illuminate/database
@@ -33,7 +39,7 @@ CREATE TABLE
   ) ENGINE = InnoDB DEFAULT CHARSET = utf8mb4
 ```
 ## Configuration
-Here is boilerplate php code for configuration: 
+Here is boilerplate php code for configuration you can use in pulse-config/ folder : 
 ```php
 <?php
 
