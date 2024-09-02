@@ -14,7 +14,22 @@ HTTP Location Updates (Slower)
 2.UDP Packet Received by GeoPulse Server: The server receives UDP packets instantly.<br/>
 3.GeoPulse Server Processes UDP Packet Immediately: Data is processed immediately with minimal latency.<br/>
 4.No Response Needed (Data Delivered Fast): No acknowledgment is required from the server.<br/>
-    
+# Protocol
+GeoPulse uses a JSON format to transmit data packets over UDP for real-time location tracking. The structure is designed to include all necessary information such as the application ID, client ID, and location data, making it easy to parse and process on the server side.
+Example JSON Structure
+```javascript
+{
+  "appId": "yourAppId123",
+  "clientId": "client456",
+  "data": {
+    "type": "Point",
+    "coordinates": [102.0, 0.5]
+  }
+}
+```
+<b>
+Data Compression: For bandwidth efficiency, you might consider compressing the JSON payload using MessagePack. GeoPulse already supports MessagePack as an alternative to JSON for smaller payload sizes.
+<b>
 # Installation
 ```
 docker pull laggounewalid/geopulse:1.0

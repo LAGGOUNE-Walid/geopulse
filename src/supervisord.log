@@ -80,3 +80,18 @@
 2024-09-02 12:47:19,259 INFO reaped unknown pid 73 (terminated by SIGINT)
 2024-09-02 12:47:19,260 INFO reaped unknown pid 45 (terminated by SIGINT)
 2024-09-02 12:47:21,263 WARN received SIGTERM indicating exit request
+2024-09-02 14:46:20,405 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-09-02 14:46:20,417 INFO RPC interface 'supervisor' initialized
+2024-09-02 14:46:20,417 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2024-09-02 14:46:20,417 INFO supervisord started with pid 1
+2024-09-02 14:46:21,421 INFO spawned: 'server' with pid 7
+2024-09-02 14:46:22,422 INFO success: server entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
+2024-09-02 14:49:24,608 WARN received SIGTERM indicating exit request
+2024-09-02 14:49:24,608 INFO waiting for server to die
+2024-09-02 14:49:24,638 INFO stopped: server (exit status 0)
+2024-09-02 14:49:36,721 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
+2024-09-02 14:49:36,726 INFO RPC interface 'supervisor' initialized
+2024-09-02 14:49:36,726 CRIT Server 'unix_http_server' running without any HTTP authentication checking
+2024-09-02 14:49:36,726 INFO supervisord started with pid 1
+2024-09-02 14:49:37,728 INFO spawned: 'server' with pid 8
+2024-09-02 14:49:38,730 INFO success: server entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)

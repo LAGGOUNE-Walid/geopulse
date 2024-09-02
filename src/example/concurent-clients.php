@@ -5,7 +5,7 @@ use Swoole\Coroutine\Client;
 
 use function Swoole\Coroutine\run;
 
-$numberOfClients = 10000;
+$numberOfClients = 9999;
 
 $sendInterval = 100;
 
