@@ -29,7 +29,7 @@ Example JSON Structure
 ```
 <b>
 Data Compression: For bandwidth efficiency, you might consider compressing the JSON payload using MessagePack. GeoPulse already supports MessagePack as an alternative to JSON for smaller payload sizes.
-<b>
+</b>
 # Installation
 ```
 docker pull laggounewalid/geopulse:1.0
