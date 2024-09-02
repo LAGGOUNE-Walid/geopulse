@@ -19,7 +19,6 @@ class BroadcastPacketService
 
     public function dropAndPopPacket(Packet $packet): void
     {
-        var_dump(Coroutine::getPcid());
         foreach($this->actions as $action) {
             $action->handle($packet);
         }
