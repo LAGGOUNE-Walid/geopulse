@@ -8,7 +8,7 @@ return [
         * This App ID allows the server to verify that a client is authorized to send UDP packets to GeoPulse.
         * Every UDP packet sent by a client must include this App ID for validation purposes.
     */
-    'appId' => 'your_app_id_here',
+    'appId' => '123',
     /*
         * Configuration: port
         *
@@ -30,7 +30,7 @@ return [
         'debug_mode' => true,
         'display_errors' => true,
         'worker_num' => 4,
-        'task_worker_num' => swoole_cpu_num() * 10,
+        'task_worker_num' => swoole_cpu_num() * 5,
         'enable_coroutine' => true,
         'task_enable_coroutine' => true,
         'open_eof_check' => true,
@@ -66,7 +66,7 @@ return [
         ],
         'default' => [
             'url' => '',
-            'host' => '',
+            'host' => 'redis',
             'username' => '',
             'password' => '',
             'port' => 6379,

@@ -9,7 +9,7 @@ $numberOfClients = 10000;
 
 $sendInterval = 100;
 
-$data = ['appId' => 'your_app_id_here', 'clientId' => '22f8e456-93f2-4173-8f2d-8a010abcceb1', 'data' => ['type' => 'Point', 'coordinates' => [1, 1]]];
+$data = ['appId' => '123', 'clientId' => '22f8e456-93f2-4173-8f2d-8a010abcceb1', 'data' => ['type' => 'Point', 'coordinates' => [1, 1]]];
 $jsonData = msgpack_pack($data);
 
 function simulateClient($host, $port, $jsonData, $sendInterval)
@@ -30,7 +30,7 @@ function simulateClient($host, $port, $jsonData, $sendInterval)
 }
 
 run(function () use ($numberOfClients, $jsonData, $sendInterval) {
-    $host = '0.0.0.0';
+    $host = '192.168.1.15';
     $port = 9505;
     for ($i = 0; $i < $numberOfClients; $i++) {
         go(function () use ($host, $port, $jsonData, $sendInterval) {
