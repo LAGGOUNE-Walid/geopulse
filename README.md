@@ -32,6 +32,7 @@ Example JSON Structure
 Data Compression: For bandwidth efficiency, you might consider compressing the JSON payload using MessagePack. GeoPulse already supports MessagePack as an alternative to JSON for smaller payload sizes.
 </b>
 <br/>
+
 # Installation
 ```
 docker pull laggounewalid/geopulse:1.0
