@@ -37,7 +37,7 @@ Example JSON Structure
 ```
 <br/>
 <b>
-Data Compression: For bandwidth efficiency, you might consider compressing the JSON payload using (MessagePack)[https://msgpack.org/index.html]. GeoPulse already supports (MessagePack)[https://msgpack.org/index.html] as an alternative to JSON for smaller payload sizes.
+Data Compression: For bandwidth efficiency, you might consider compressing the JSON payload using [MessagePack](https://msgpack.org/index.html). GeoPulse already supports [MessagePack](https://msgpack.org/index.html) as an alternative to JSON for smaller payload sizes.
 </b>
 <br/>
 
