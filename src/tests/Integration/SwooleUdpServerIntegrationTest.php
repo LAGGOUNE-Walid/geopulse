@@ -11,6 +11,11 @@ use Swoole\Server\Task;
 
 class SwooleUdpServerIntegrationTest extends TestCase
 {
+    public function setUp(): void
+    {
+        error_reporting(E_ALL);
+    }
+
     public function testEndToEndDataFlow()
     {
         $packetData = json_encode([
@@ -22,7 +27,9 @@ class SwooleUdpServerIntegrationTest extends TestCase
             ],
         ]);
 
-        $server = new Server('127.0.0.1', 9505, SWOOLE_BASE, SWOOLE_SOCK_UDP);
+        $serverStub = $this->getMockBuilder(Server::class)->disableOriginalConstructor()->getMock();
+        $serverStub->method('task')
+            ->willReturn(1);
         $udpPacketParser = new UdpPacketParser(false);
         $broadcastService = $this->createMock(BroadcastPacketService::class);
         $enqueuePacketAction = $this->createMock(EnqueuePacketAction::class);
@@ -31,7 +38,7 @@ class SwooleUdpServerIntegrationTest extends TestCase
         $broadcastService->addAction($savePacketAction);
 
         $serverHandler = new SwooleUdpServerEventHandler($udpPacketParser, $broadcastService, 'validAppId');
-        $result = $serverHandler->onPacket($server, $packetData, ['address' => '127.0.0.1', 'port' => 12345]);
+        $result = $serverHandler->onPacket($serverStub, $packetData, ['address' => '127.0.0.1', 'port' => 12345]);
         $this->assertTrue($result);
         $packet = $udpPacketParser->fromString($packetData);
         $task = new Task;
@@ -39,6 +46,6 @@ class SwooleUdpServerIntegrationTest extends TestCase
 
         $broadcastService->expects($this->once())
             ->method('dropAndPopPacket');
-        $serverHandler->onTask($server, $task);
+        $serverHandler->onTask($serverStub, $task);
     }
 }
