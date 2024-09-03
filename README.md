@@ -12,7 +12,7 @@ HTTP Location Updates (Slower)
 
 5.Server Sends HTTP Response Back to Client: The server sends a response back to the client.<br/>
 
-6.Client Receives HTTP Response: The client receives the response and updates the display.<br/>
+6.Client Receives HTTP Response.<br/>
 
 <br/>
 <b>GeoPulse with UDP (Fast)</b><br/><br/>
