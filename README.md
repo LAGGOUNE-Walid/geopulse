@@ -1,19 +1,27 @@
-GeoPulse is a specialized server application designed to handle real-time geolocation data from clients via the UDP protocol. The server captures GPS coordinates and other relevant data from client devices and processes them for various uses, such as real-time tracking, historical data retrieval, and user connection status management. GeoPulse is optimized for high performance and scalability, utilizing [geojson](https://geojson.org/), [Swoole](https://github.com/swoole/swoole-src) to handle numerous simultaneous UDP connections with low latency. It integrates seamlessly with [Laravel's](https://laravel.com/) queue system allowing you to capture tracking events using laravel jobs.
+GeoPulse is a specialized server application designed to handle real-time geolocation data from clients via the UDP protocol. The server captures GPS coordinates and processes them for various uses, such as real-time tracking and historical data retrieval. GeoPulse is optimized for high performance, utilizing [geojson](https://geojson.org/), [Swoole](https://github.com/swoole/swoole-src) to handle numerous simultaneous UDP connections with low latency. It integrates seamlessly with [Laravel's](https://laravel.com/) queue system allowing you to capture tracking events using laravel jobs.
 # Why 
 HTTP Location Updates (Slower)
 
 1.Client Sends HTTP Request: The client sends periodic HTTP requests to check for updates.<br/>
+
 2.HTTP Request is Sent to Server: The request is transmitted over HTTP.<br/>
+
 3.Server Receives HTTP Request: The server processes the incoming HTTP request.<br/>
+
 4.Server Processes Request (Overhead): The server processes the request with potential delays.<br/>
+
 5.Server Sends HTTP Response Back to Client: The server sends a response back to the client.<br/>
+
 6.Client Receives HTTP Response: The client receives the response and updates the display.<br/>
+
 <br/>
 <b>GeoPulse with UDP (Fast)</b><br/><br/>
+
 1.Client Sends UDP Packet (Continuous): The client continuously sends UDP packets.<br/>
-2.UDP Packet Received by GeoPulse Server: The server receives UDP packets instantly.<br/>
-3.GeoPulse Server Processes UDP Packet Immediately: Data is processed immediately with minimal latency.<br/>
-4.No Response Needed (Data Delivered Fast): No acknowledgment is required from the server.<br/>
+
+2.GeoPulse Server Processes UDP Packet Immediately: Data is processed immediately.<br/>
+
+3.No Response Needed (Data Delivered Fast): No ACk is required from the server.<br/>
 # Protocol
 GeoPulse uses a JSON format to transmit data packets over UDP for real-time location tracking. The structure is designed to include all necessary information such as the application ID, client ID, and location data, making it easy to parse and process on the server side.<br/>
 Example JSON Structure
@@ -154,11 +162,11 @@ return [
     'database-connection' => [
         'driver' => 'mariadb',
         'url' => null,
-        'host' => 'mariadb-geopulse',
+        'host' => 'YOUR_DATABASE_HOT',
         'port' => '3306',
-        'database' => 'geopulse',
-        'username' => 'root',
-        'password' => 'geopulse',
+        'database' => 'DB_NAME',
+        'username' => 'DB_USER',
+        'password' => 'DB_PASSWORD',
         'unix_socket' => null,
         'charset' => 'utf8mb4',
         'collation' => 'utf8mb4_unicode_ci',
