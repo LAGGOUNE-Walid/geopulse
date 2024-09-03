@@ -1,6 +1,0 @@
-2024-09-03 10:23:33,606 CRIT Supervisor is running as root.  Privileges were not dropped because no user is specified in the config file.  If you intend to run as root, you can set user=root in the config file to avoid this message.
-2024-09-03 10:23:33,615 INFO RPC interface 'supervisor' initialized
-2024-09-03 10:23:33,615 CRIT Server 'unix_http_server' running without any HTTP authentication checking
-2024-09-03 10:23:33,615 INFO supervisord started with pid 1
-2024-09-03 10:23:34,619 INFO spawned: 'server' with pid 6
-2024-09-03 10:23:35,620 INFO success: server entered RUNNING state, process has stayed up for > than 1 seconds (startsecs)
