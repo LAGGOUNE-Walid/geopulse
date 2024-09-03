@@ -26,7 +26,7 @@ class SwooleUdpServerEventHandler
         }
 
         // Spawn a new asynchronous task to save the coordinates to the database
-        $server->task(['packet' => $this->udpPacketParser]);
+        $server->task(['packet' => $packet]);
 
         // Return true to indicate that the packet was processed successfully
         return true;
