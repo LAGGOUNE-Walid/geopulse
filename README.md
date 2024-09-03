@@ -237,3 +237,33 @@ class PulseLocationUpdatedJob implements ShouldQueue
 }
 
 ```
+
+<br/>
+
+# Cloning and implementing your own broadcasters
+To implement your own broadcaster example (kafaka or mongodb ...) simply you need to add in bin/bootstrap.php your broadcaster needs to be located in src/app/Actions/ and must implemnet PacketActionContract
+```php
+<?php
+
+namespace Pulse\Actions;
+
+use Illuminate\Queue\Capsule\Manager as Queue;
+use Pulse\Contracts\Action\PacketActionContract;
+use Pulse\Contracts\PacketParser\Packet;
+
+class PublishToKafkaTopic implements PacketActionContract
+{
+    public function handle(Packet $packet): void
+    {
+        // 
+    }
+}
+
+```
+```php
+$container->add(BroadcastPacketService::class, function () use ($config) {
+    $broadcaster = new BroadcastPacketService;
+    $broadcaster->addAction(new PublishToKafkaTopic);
+    return $broadcaster;
+});
+```
