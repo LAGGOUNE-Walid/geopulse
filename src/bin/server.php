@@ -10,5 +10,4 @@ $server = new Swoole\Server(
 );
 $server->set($config['swoole']);
 $server->on('Packet', [$swooleUdpEventsHandler, 'onPacket']);
-$server->on('Task', [$swooleUdpEventsHandler, 'onTask']);
 $server->start();

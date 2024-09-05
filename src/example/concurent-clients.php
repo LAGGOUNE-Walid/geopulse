@@ -5,7 +5,7 @@ use Swoole\Coroutine\Client;
 
 use function Swoole\Coroutine\run;
 
-$numberOfClients = 9999;
+$numberOfClients = 5000;
 
 $sendInterval = 100;
 
@@ -30,7 +30,7 @@ function simulateClient($host, $port, $jsonData, $sendInterval)
 }
 
 run(function () use ($numberOfClients, $jsonData, $sendInterval) {
-    $host = '192.168.1.15';
+    $host = '192.168.1.12';
     $port = 9505;
     for ($i = 0; $i < $numberOfClients; $i++) {
         go(function () use ($host, $port, $jsonData, $sendInterval) {

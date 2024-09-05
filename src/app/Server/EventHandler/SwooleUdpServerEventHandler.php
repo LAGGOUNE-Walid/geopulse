@@ -4,6 +4,7 @@ namespace Pulse\Server\EventHandler;
 
 use Pulse\Contracts\PacketParser\Packet;
 use Pulse\Services\BroadcastPacketService;
+use Swoole\Coroutine as Co;
 use Swoole\Server;
 use Swoole\Server\Task;
 
@@ -24,16 +25,8 @@ class SwooleUdpServerEventHandler
             // No further action is needed for unauthorized packets
             return false;
         }
+        $this->broadcastPacketService->dropAndPopPacket($packet);
 
-        // Spawn a new asynchronous task to save the coordinates to the database
-        $server->task(['packet' => $packet]);
-
-        // Return true to indicate that the packet was processed successfully
         return true;
-    }
-
-    public function onTask(Server $server, Task $task): void
-    {
-        $this->broadcastPacketService->dropAndPopPacket($task->data['packet']);
     }
 }

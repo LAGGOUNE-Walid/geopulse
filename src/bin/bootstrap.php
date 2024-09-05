@@ -1,12 +1,14 @@
 <?php
 
 use Illuminate\Container\Container as LaravelContainer;
-use Illuminate\Database\Capsule\Manager as Capsule;
+use Illuminate\Database\Capsule\Manager as DB;
 use Illuminate\Queue\Capsule\Manager as Queue;
 use Illuminate\Redis\RedisManager;
 use League\Container\Container;
 use Pulse\Actions\EnqueuePacketAction;
 use Pulse\Actions\SavePacketAction;
+use Pulse\Pool\DatabaseConnectionPool;
+use Pulse\Pool\QueueConnectionPool;
 use Pulse\Server\EventHandler\SwooleUdpServerEventHandler;
 use Pulse\Server\PacketParser\UdpPacketParser;
 use Pulse\Services\BroadcastPacketService;
@@ -33,12 +35,11 @@ if ($config['enable-queue']) {
 
         return $queue;
     });
-    $container->get(Queue::class);
 }
 
 if ($config['enable-database']) {
-    $container->add(Capsule::class, function () use ($config) {
-        $db = new Capsule;
+    $container->add(DB::class, function () use ($config) {
+        $db = new DB;
 
         $db->addConnection($config['database-connection']);
         $db->setAsGlobal();
@@ -46,16 +47,17 @@ if ($config['enable-database']) {
 
         return $db;
     });
-    $container->get(Capsule::class);
 }
 
-$container->add(BroadcastPacketService::class, function () use ($config) {
+$container->add(BroadcastPacketService::class, function () use ($config, $container) {
     $broadcaster = new BroadcastPacketService;
     if ($config['enable-queue']) {
-        $broadcaster->addAction(new EnqueuePacketAction);
+        $queueConnectionsPool = new QueueConnectionPool($container, $config['queue-pool-size']);
+        $broadcaster->addAction(new EnqueuePacketAction($queueConnectionsPool));
     }
     if ($config['enable-database']) {
-        $broadcaster->addAction(new SavePacketAction);
+        $databaseConnectionsPool = new DatabaseConnectionPool($container, $config['db-pool-size']);
+        $broadcaster->addAction(new SavePacketAction($databaseConnectionsPool, $config['table-name']));
     }
 
     return $broadcaster;

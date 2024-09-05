@@ -4,9 +4,8 @@ namespace Pulse\Services;
 
 use Pulse\Contracts\Action\PacketActionContract;
 use Pulse\Contracts\PacketParser\Packet;
+
 use function Swoole\Coroutine\go;
-use function Swoole\Coroutine\run;
-use Swoole\Coroutine;
 
 class BroadcastPacketService
 {
@@ -19,8 +18,11 @@ class BroadcastPacketService
 
     public function dropAndPopPacket(Packet $packet): void
     {
-        foreach($this->actions as $action) {
-            $action->handle($packet);
+        foreach ($this->actions as $action) {
+            go(function () use ($action, $packet) {
+                $action->handle($packet);
+            });
+
         }
     }
 }

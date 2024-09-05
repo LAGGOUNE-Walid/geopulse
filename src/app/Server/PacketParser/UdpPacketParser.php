@@ -29,6 +29,7 @@ class UdpPacketParser implements Packet
     {
         try {
             if ($this->usingMsgPack) {
+                var_dump($data);
                 $unpackedData = msgpack_unpack($data);
             } else {
                 $unpackedData = json_decode($data, true);
@@ -37,7 +38,7 @@ class UdpPacketParser implements Packet
             $unpackedData = [];
         }
 
-        if ($unpackedData !== [] and $unpackedData !== null) {
+        if ($unpackedData !== [] and $unpackedData !== null and is_array($unpackedData)) {
             if ($this->dataIsValide($unpackedData)) {
                 $this->appId = $unpackedData['appId'];
                 $this->clientId = $unpackedData['clientId'];
