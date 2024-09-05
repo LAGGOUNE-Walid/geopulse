@@ -99,9 +99,7 @@ return [
         'debug_mode' => true,
         'display_errors' => true,
         'worker_num' => 4,
-        'task_worker_num' => swoole_cpu_num() * 5,
         'enable_coroutine' => true,
-        'task_enable_coroutine' => true,
         'open_eof_check' => true,
         'package_eof' => "\r\n",
         'dispatch_mode' => 1,
@@ -112,6 +110,21 @@ return [
         * Determines whether the server should packets to your application using queues.
     */
     'enable-queue' => true,
+
+    /*
+        * Configuration: queue-pool-size
+        *
+        * This parameter specifies the number of queue worker connections that will be created 
+        * and managed in the Swoole connection pool. These connections are utilized to push 
+        * jobs to the server efficiently, ensuring that a new connection does not need to be established 
+        * for each queue operation.
+        *
+        * A larger pool size can help manage a higher volume of queue jobs concurrently, but 
+        * it also increases memory and resource usage.
+        *
+        * Default value: 10
+    */
+    'queue-pool-size' => 10,
 
     /*
         * Configuration: queue-connection
@@ -152,12 +165,28 @@ return [
     'enable-database' => true,
 
     /*
+        * Configuration: db-pool-size
+        *
+        * This parameter defines the number of database connections that will be created 
+        * and added to the Swoole connection pool. These connections are reused to handle 
+        * database operations efficiently, reducing the overhead of establishing new connections 
+        * for each operation.
+        *
+        * Increasing the pool size can improve performance when dealing with many concurrent 
+        * database operations, but it will also increase resource consumption.
+        *
+        * Default value: 10
+    */
+    'db-pool-size' => 10,
+
+    /*
         * Configuration: database-connection
         *
         * Defines the database connection settings, following the same structure as Laravel's
         * database configuration file. This ensures compatibility with Laravel's database handling
         * capabilities and allows for flexible configuration across different environments.
     */
+    'table-name' => 'pulse_coordinates',
     'database-connection' => [
         'driver' => 'mariadb',
         'url' => null,
