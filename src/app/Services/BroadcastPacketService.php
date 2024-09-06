@@ -19,8 +19,9 @@ class BroadcastPacketService
     public function dropAndPopPacket(Packet $packet): void
     {
         foreach ($this->actions as $action) {
+            // @phpstan-ignore-next-line
             go(function () use ($action, $packet) {
-                $action->handle($packet);
+                $action->handle($packet); 
             });
 
         }

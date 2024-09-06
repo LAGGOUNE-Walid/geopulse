@@ -10,26 +10,30 @@ class UdpPacketParser implements Packet
 {
     /**
      * The raw payload data associated with the packet.
+     *
+     * @var array{
+     *     type: string,
+     *     coordinates: array<float>
+     * }
      */
-    private ?array $payload = null;
+    private array $payload;
 
     /**
      * The Application ID extracted from the packet data.
      */
-    private ?string $appId = null;
+    private string $appId;
 
     /**
      * The Client ID extracted from the packet data.
      */
-    private ?string $clientId = null;
+    private string $clientId;
 
     public function __construct(private bool $usingMsgPack) {}
 
-    public function fromString(string $data): Packet
+    public function fromString(string $data): ?Packet
     {
         try {
             if ($this->usingMsgPack) {
-                var_dump($data);
                 $unpackedData = msgpack_unpack($data);
             } else {
                 $unpackedData = json_decode($data, true);
@@ -43,10 +47,11 @@ class UdpPacketParser implements Packet
                 $this->appId = $unpackedData['appId'];
                 $this->clientId = $unpackedData['clientId'];
                 $this->payload = $unpackedData['data'];
+                return $this;
             }
         }
 
-        return $this;
+        return null;
     }
 
     public function dataIsValide(array $data): bool
@@ -54,29 +59,26 @@ class UdpPacketParser implements Packet
         return array_key_exists('appId', $data) and array_key_exists('clientId', $data) and array_key_exists('data', $data);
     }
 
-    public function getAppId(): ?string
+    public function getAppId(): string
     {
         return $this->appId;
     }
 
-    public function getClientId(): ?string
+    public function getClientId(): string
     {
         return $this->clientId;
     }
 
-    public function toPoint(): ?Point
+    public function toPoint(): Point
     {
-        if (! $this->payload) {
-            return null;
-        }
         try {
             $point = GeoJson::jsonUnserialize($this->payload);
         } catch (\Throwable $th) {
-            return null;
+            return GeoJson::jsonUnserialize(['type' => 'Point', 'coordinates' => [0, 0]]);
         }
 
         if (! ($point instanceof Point)) {
-            return null;
+            return GeoJson::jsonUnserialize(['type' => 'Point', 'coordinates' => [0, 0]]);
         }
 
         return $point;
@@ -84,7 +86,11 @@ class UdpPacketParser implements Packet
 
     public function toJson(): string
     {
-        return json_encode($this->toArray());
+        $json = json_encode($this->toArray());
+        if (! $json) {
+            return "{}";
+        }
+        return $json;
     }
 
     public function toArray(): array

@@ -12,11 +12,15 @@ class SwooleUdpServerEventHandler
 {
     public function __construct(private Packet $udpPacketParser, private BroadcastPacketService $broadcastPacketService, private string $appId) {}
 
-    public function onPacket(Server $server, string $data, array $clientInfo): bool
+    public function onPacket(Server $server, string $data): bool
     {
         // Read and unpack the message if it is compressed with msgpack
         // This uses the udpPacketParser service to deserialize the incoming UDP packet data
         $packet = $this->udpPacketParser->fromString($data);
+
+        if ($packet === null) {
+            return false;
+        }
 
         // Verify that the App ID sent from the client matches the server's configured App ID
         // This ensures that only authorized clients can send data to the server
