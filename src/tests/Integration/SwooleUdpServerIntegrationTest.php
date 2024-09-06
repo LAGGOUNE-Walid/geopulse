@@ -38,14 +38,11 @@ class SwooleUdpServerIntegrationTest extends TestCase
         $broadcastService->addAction($savePacketAction);
 
         $serverHandler = new SwooleUdpServerEventHandler($udpPacketParser, $broadcastService, 'validAppId');
+        $broadcastService->expects($this->once())
+            ->method('dropAndPopPacket');
         $result = $serverHandler->onPacket($serverStub, $packetData, ['address' => '127.0.0.1', 'port' => 12345]);
         $this->assertTrue($result);
         $packet = $udpPacketParser->fromString($packetData);
-        $task = new Task;
-        $task->data = ['packet' => $packet];
-
-        $broadcastService->expects($this->once())
-            ->method('dropAndPopPacket');
-        $serverHandler->onTask($serverStub, $task);
+        $this->assertNotNull($packet);
     }
 }
