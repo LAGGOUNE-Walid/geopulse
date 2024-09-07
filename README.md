@@ -2,7 +2,7 @@ GeoPulse is a specialized server application designed to handle real-time geoloc
 # Why 
 HTTP Location Updates (Slower)
 
-1.Client Sends HTTP Request: The client sends periodic HTTP requests to check for updates.<br/>
+1.Client Sends HTTP Request: The client sends periodic HTTP post requests to update location.<br/>
 
 2.HTTP Request is Sent to Server: The request is transmitted over HTTP.<br/>
 
@@ -12,7 +12,7 @@ HTTP Location Updates (Slower)
 
 5.Server Sends HTTP Response Back to Client: The server sends a response back to the client.<br/>
 
-6.Client Receives HTTP Response.<br/>
+6.Client Receives HTTP Response (OK).<br/>
 
 <br/>
 <b>GeoPulse with UDP (Fast)</b><br/><br/>
