@@ -50,7 +50,7 @@ docker run -d -p 9505:9505/udp -v ./pulse-config:/var/www/html/config laggounewa
 pulse-config/ folder must contain pulse.php config file
 ## Requirements
 - Queue server supported by illuminate/queue
-- Database supported by illuminate/database
+- Database supported by illuminate/database (Oracle Database not supported by geopulse)
 ## Database table
 ```sql
 CREATE TABLE
