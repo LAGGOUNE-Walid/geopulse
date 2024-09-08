@@ -1,3 +1,4 @@
 src/vendor
 src/vendor/
+src/composer.lock
 src/config/pulse.php

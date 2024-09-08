@@ -1,12 +1,18 @@
-FROM phpswoole/swoole:6.0-php8.2-alpine
+FROM phpswoole/swoole:5.0.1-php8.2-alpine
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN apk update && apk add --no-cache supervisor
 RUN apk add --no-cache libzip-dev
 RUN apk add --no-cache msgpack-c
 RUN chmod +x /usr/local/bin/install-php-extensions && sync
 RUN apk add --no-cache linux-headers
-RUN docker-php-ext-install pdo pdo_mysql zip pcntl exif sockets opcache 
-RUN docker-php-ext-enable pdo pdo_mysql zip pcntl exif sockets opcache 
+RUN set -ex \
+  && apk --no-cache add \
+    postgresql14-dev=14.12-r0
+RUN set -ex \
+    && apk --no-cache add \
+    sqlite-dev=3.40.1-r1 
+RUN docker-php-ext-install pdo pdo_mysql pdo_pgsql pdo_sqlite zip pcntl exif sockets opcache  
+RUN docker-php-ext-enable pdo pdo_mysql pdo_pgsql pdo_sqlite zip pcntl exif sockets opcache 
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 RUN apk add --update --virtual builds \
     libc-dev \
