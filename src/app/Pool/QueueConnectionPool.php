@@ -8,7 +8,7 @@ use Swoole\ConnectionPool;
 
 class QueueConnectionPool extends ConnectionPool
 {
-    public function __construct(Container $container, public int $size)
+    public function __construct(Container $container, int $size)
     {
         parent::__construct(function () use ($container) {
             return $container->get(Queue::class);
