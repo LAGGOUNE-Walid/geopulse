@@ -40,6 +40,16 @@ GeoPulse uses a JSON format to transmit data packets over UDP for real-time loca
 
 For bandwidth efficiency, you might consider compressing the JSON payload using [MessagePack](https://msgpack.org/). GeoPulse already supports MessagePack as an alternative to JSON for smaller payload sizes.
 
+## Benchmark 
+
+- Kernel: x86_64 Linux 6.8.0-41-generic / Intel Core i5-4590T @ 4x 3GHz / 16GB of ram / Local network
+- Tools: Apache Jmeter with [udp plugin](https://jmeter-plugins.org/wiki/UDPRequest/) / number of threads 5000 in 1 second
+- pulse-config:  open_cpu_affinity = true , 'cpu_affinity_ignore' => [0,1], 'worker_num' => 6
+- server responds with "OK" , in real life scenario the server will not responde to the client.
+
+![photo_2024-09-08_19-31-14](https://github.com/user-attachments/assets/7aa6efb1-fc8d-44da-a00f-1eeb66299079)
+
+
 ## Installation
 
 ```bash
